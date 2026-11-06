@@ -1,0 +1,52 @@
+name: Build AutoTax APK
+on:
+  push:
+    branches: [main]
+    paths-ignore: ['apk/**', 'README.md']
+  workflow_dispatch:
+permissions:
+  contents: write
+concurrency:
+  group: android-main
+  cancel-in-progress: false
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: '17'
+      - uses: android-actions/setup-android@v3
+      - uses: gradle/actions/setup-gradle@v4
+        with:
+          gradle-version: '8.9'
+      - uses: actions/cache@v4
+        with:
+          path: ~/.android/debug.keystore
+          key: autotax-debug-signing-v1
+      - run: gradle assembleDebug lintDebug --no-daemon
+      - name: Prepare APK
+        run: |
+          mkdir -p apk
+          cp app/build/outputs/apk/debug/app-debug.apk apk/autotax-web-debug.apk
+          cd apk
+          sha256sum autotax-web-debug.apk > SHA256SUMS
+      - uses: actions/upload-artifact@v4
+        with:
+          name: autotax-web-apk
+          path: apk/
+      - name: Publish release
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          gh release create "android-${GITHUB_RUN_NUMBER}" apk/autotax-web-debug.apk apk/SHA256SUMS --title "AutoTax Android build ${GITHUB_RUN_NUMBER}" --notes "APK debug cài thử. Mở web AutoTax bằng Custom Tabs. Cần Internet và trình duyệt. Chưa kiểm thử trên điện thoại thật."
+      - name: Store latest APK in repository
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add apk/
+          git commit -m "Update built AutoTax APK [skip ci]"
+          git pull --rebase origin main
+          git push origin main
