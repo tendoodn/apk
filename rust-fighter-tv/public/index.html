@@ -1,0 +1,40 @@
+<!doctype html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+  <meta name="theme-color" content="#0c101c">
+  <title>Rust Fighter TV — Đối kháng trên Google TV</title>
+  <link rel="stylesheet" href="/styles.css">
+</head>
+<body class="tv-page">
+  <main class="tv-shell">
+    <header class="brand-header">
+      <div class="brandmark"><span class="brand-symbol">RF</span><div><p class="overline">10 CLASSIC FIGHTERS · RUST TV PROTOTYPE</p><h1>RUST <strong>FIGHTER</strong> <em>TV</em></h1></div></div>
+      <div class="header-info"><span class="live-dot"></span> GOOGLE TV · MOBILE REMOTE <span class="version">2026 / ALPHA</span></div>
+    </header>
+
+    <section id="setup" class="setup-screen">
+      <div class="setup-copy"><span class="eyebrow">KẾT NỐI NHANH · KHÔNG CẦN TÀI KHOẢN</span><h2>MỞ GAME<br><span>GIAO CHIẾN</span></h2><p>Mở đường dẫn điều khiển trên điện thoại, nhập mã hiển thị trên TV và xác nhận nhân vật. Hai điện thoại có thể chiến đấu trực tiếp.</p><div class="setup-rule"><b>03</b><span>HIỆP ĐẤU</span><b>10</b><span>NHÂN VẬT</span><b>02</b><span>TAY CẦM</span></div></div>
+      <div class="setup-panel"><span class="tiny-heading">CHẾ ĐỘ CHƠI</span><div class="mode-group"><button id="modeSolo" class="mode-option active" aria-pressed="true"><span class="mode-illustration">01 <small>VS AI</small></span><span><b>1 NGƯỜI</b><small>Đối kháng với máy</small></span><span class="mode-indicator">●</span></button><button id="modeDuo" class="mode-option" aria-pressed="false"><span class="mode-illustration">02 <small>VS P2</small></span><span><b>2 NGƯỜI</b><small>2 điện thoại điều khiển</small></span><span class="mode-indicator">●</span></button></div><button id="createRoom" class="cta-start">TẠO PHÒNG ĐẤU <span>→</span></button><p class="support-note">TV và điện thoại cùng Wi-Fi, hoặc cùng truy cập một máy chủ công khai.</p><p id="setupError" class="status-error" role="status"></p></div>
+    </section>
+
+    <section id="gameShell" class="game-shell hidden">
+      <div class="room-top"><div class="session-label"><span class="online-pill">● ĐẤU TRƯỜNG ĐÃ MỞ</span><span id="roomModeLabel">1P · VS MÁY</span></div><div class="pair-strip" id="pairStrip"></div><button id="newRoom" class="small-action" title="Đóng phòng và đổi chế độ">PHÒNG MỚI</button></div>
+      <div class="game-viewport">
+        <canvas id="arena" width="1280" height="720" aria-label="Đấu trường đối kháng"></canvas>
+        <div id="selectOverlay" class="select-overlay">
+          <div class="selection-bar"><span>CHARACTER SELECT</span><b>CHỌN NHÂN VẬT</b><span>10 FIGHTERS</span></div>
+          <div class="selection-halves"><div class="fighter-select-side" id="selectLeft"></div><div class="fighter-select-side" id="selectRight"></div></div>
+          <div class="selection-footer">ĐIỀU KHIỂN TRÊN ĐIỆN THOẠI · MỖI NGƯỜI CHỌN VÀ BẤM <strong>“XÁC NHẬN”</strong></div>
+        </div>
+        <div id="centerNotice" class="center-notice hidden"><div id="noticeEyebrow" class="notice-eyebrow"></div><div id="noticeText" class="notice-title"></div><div id="noticeSub" class="notice-sub"></div></div>
+        <div id="disconnected" class="disconnect-notice hidden">ĐANG CHỜ TAY CẦM KẾT NỐI LẠI…</div>
+      </div>
+      <div class="footer-instructions"><div><span class="bullet-dot"></span><b>GHÉP NỐI:</b> <span id="phoneUrl">Mở /remote.html trên điện thoại</span></div><div>DI CHUYỂN · NHẢY · ĐẤM · ĐÁ · TUYỆT CHIÊU · ĐỠ</div></div>
+    </section>
+    <footer class="page-footer"><span>RUST SERVER · HTML5 CANVAS · REAL-TIME WEBSOCKET</span><span>FIGHT SMART. SWITCH SIDES. WIN THE FINAL ROUND.</span></footer>
+  </main>
+  <script src="/shared.js"></script><script src="/character-art.js"></script><script src="/tv.js"></script>
+</body>
+</html>

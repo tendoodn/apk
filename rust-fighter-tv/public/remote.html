@@ -1,0 +1,26 @@
+<!doctype html>
+<html lang="vi">
+<head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover,maximum-scale=1,user-scalable=no"><meta name="theme-color" content="#0b101a"><title>Tay cầm Rust Fighter TV</title><link rel="stylesheet" href="/styles.css"></head>
+<body class="remote-page">
+  <main class="remote-shell">
+    <header class="remote-header"><div class="remote-logo">RUST <span>FIGHTER</span> TV</div><span class="remote-label">PHONE CONTROLLER</span></header>
+    <section id="connectView" class="remote-box"><span class="eyebrow">KẾT NỐI TAY CẦM</span><h2>NHẬP MÃ TRÊN TV</h2><p>Mỗi người nhập <strong>mã 6 chữ số riêng</strong> hiển thị trên Google TV. Khi kết nối thành công, mã của bạn tự ẩn khỏi TV.</p>
+      <form id="connectForm"><div class="code-entry"><input id="roomCode" type="text" inputmode="numeric" pattern="[0-9]{6}" maxlength="6" minlength="6" autocomplete="one-time-code" placeholder="000000" required aria-label="Mã ghép nối 6 chữ số"></div><button id="connectButton" class="mobile-cta" type="submit">KẾT NỐI VỚI TV →</button></form><p class="mobile-feedback" id="connectError" role="status"></p><p class="remote-id">Điện thoại và TV phải cùng kết nối tới máy chủ game.</p>
+    </section>
+    <section id="modeView" class="hidden remote-session remote-mode-view">
+      <div class="mobile-chip">CHỦ PHÒNG · TAY CẦM 1</div>
+      <h2>CHỌN CHẾ ĐỘ CHƠI</h2>
+      <p>Điện thoại đầu tiên kết nối được quyền chọn chế độ. TV tự động mở danh sách nhân vật sau khi anh chọn.</p>
+      <button type="button" id="modeSoloMobile" class="remote-mode-card"><b>1 NGƯỜI</b><span>ĐẤU VỚI MÁY (CPU)</span></button>
+      <button type="button" id="modeDuoMobile" class="remote-mode-card"><b>2 NGƯỜI</b><span>2 ĐIỆN THOẠI ĐỐI KHÁNG</span></button>
+    </section>
+    <section id="selectionView" class="hidden remote-session"><div class="remote-select-heading"><div><span class="mobile-chip" id="selectionSlot">PLAYER 1 · ĐÃ KẾT NỐI</span><h2>CHỌN NHÂN VẬT</h2></div><button id="changeModeMobile" class="mode-back hidden" type="button">ĐỔI CHẾ ĐỘ</button></div><div id="mobileRoster" class="remote-characters"></div><button id="readyButton" class="mobile-cta">XÁC NHẬN NHÂN VẬT</button><div id="lockedMessage" class="remote-locked hidden">ĐÃ XÁC NHẬN · ĐANG CHỜ ĐỐI THỦ</div></section>
+    <section id="controlView" class="hidden remote-session"><div class="remote-game-title"><div><span class="mobile-chip" id="gameSlot">PLAYER 1</span><strong id="characterName">RYU</strong></div><div class="round-pill" id="roundLabel">HIỆP 1 / 3</div></div>
+      <div class="remote-health"><div><label><span>BẠN</span><span id="ownHp">100%</span></label><div class="meter-track"><div class="meter-fill" id="ownBar" style="width:100%"></div></div></div><div><label><span>ĐỐI THỦ</span><span id="rivalHp">100%</span></label><div class="meter-track cpu"><div class="meter-fill" id="rivalBar" style="width:100%"></div></div></div></div>
+      <div class="mobile-status" id="mobileStatus">CHỜ GIAO CHIẾN</div>
+      <div class="controls-layout" id="controlPad"><div class="dpad"><button type="button" class="control-btn dir jump" data-input="up" aria-label="Nhảy">↑</button><button type="button" class="control-btn dir left" data-input="left" aria-label="Sang trái">←</button><button type="button" class="control-btn dir right" data-input="right" aria-label="Sang phải">→</button><button type="button" class="control-btn guard" data-input="guard">ĐỠ</button></div><div class="attack-pad"><button type="button" class="control-btn light" data-input="light">ĐẤM<span class="smaller">NHANH</span></button><button type="button" class="control-btn heavy" data-input="heavy">ĐÁ<span class="smaller">MẠNH</span></button><button type="button" class="control-btn special" data-input="special">TUYỆT CHIÊU<span class="smaller">CẦN ≥ 50 NĂNG LƯỢNG</span></button><button type="button" class="control-btn guard-dup" data-input="guard">ĐỠ ĐÒN</button></div></div>
+      <button type="button" class="mobile-cta rematch-btn hidden" id="rematchButton">ĐẤU LẠI · CHỌN NHÂN VẬT</button><p class="touch-warning">Giữ nhiều nút cùng lúc · Dùng điện thoại nằm ngang để tay cầm rộng hơn</p>
+    </section>
+  </main>
+  <script src="/shared.js"></script><script src="/character-art.js"></script><script src="/remote.js"></script>
+</body></html>
