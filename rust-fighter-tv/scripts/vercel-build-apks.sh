@@ -3,6 +3,18 @@ set -Eeuo pipefail
 # Run this in a Vercel Linux Build (x86_64) or a comparable isolated Linux CI worker.
 cd "$(dirname "${BASH_SOURCE[0]}")/.."
 ROOT="$PWD"
+# Vercel Sandbox images may omit the host C toolchain required by Cargo build scripts.
+if ! command -v cc >/dev/null 2>&1; then
+  if [ "$(id -u)" = "0" ]; then
+    apt-get update -qq && DEBIAN_FRONTEND=noninteractive apt-get install -y --no-install-recommends build-essential pkg-config
+  elif command -v sudo >/dev/null 2>&1 && sudo -n true >/dev/null 2>&1; then
+    sudo -n apt-get update -qq
+    sudo -n env DEBIAN_FRONTEND=noninteractive apt-get install -y --no-install-recommends build-essential pkg-config
+  else
+    echo "Host C compiler (cc) unavailable. Install build-essential before running Android build." >&2
+    exit 1
+  fi
+fi
 TOOLS="$ROOT/.toolchains"
 mkdir -p "$TOOLS" "$ROOT/dist"
 export PATH="$TOOLS/bin:$PATH"
@@ -36,6 +48,7 @@ mkdir -p "$ANDROID_HOME/licenses"
 # Google's published Android SDK license digests. Verify against developer.android.com before modifying.
 printf '8933bad161af4178b1185d1a37fbf41ea5269c55\n' > "$ANDROID_HOME/licenses/android-sdk-license"
 printf 'd56f5187479451eabf01fb78af6dfcb131a6481e\n' > "$ANDROID_HOME/licenses/android-sdk-preview-license"
+(yes | "$SDK/bin/sdkmanager" --sdk_root="$ANDROID_HOME" --licenses) > "$TOOLS/sdk-licenses.log" 2>&1 || true
 "$SDK/bin/sdkmanager" --sdk_root="$ANDROID_HOME" 'platforms;android-35' 'build-tools;35.0.0' 'ndk;27.2.12479018' 'platform-tools'
 export ANDROID_NDK_HOME="$ANDROID_HOME/ndk/27.2.12479018"
 
