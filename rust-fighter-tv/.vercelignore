@@ -1,0 +1,8 @@
+# Files irrelevant to Android APK deployment
+preview-*.png
+art/
+tests/
+.git/
+.toolchains/
+android-tv/**/build/
+android-tv/tv/src/main/jniLibs/
