@@ -80,8 +80,8 @@ export GRADLE_USER_HOME="$TOOLS/.gradle"
 "$GRADLE" --no-daemon --max-workers=2 -p android-tv :tv:assembleDebug :remote:assembleDebug
 require_file 'android-tv/tv/build/outputs/apk/debug/tv-debug.apk'
 require_file 'android-tv/remote/build/outputs/apk/debug/remote-debug.apk'
-cp android-tv/tv/build/outputs/apk/debug/tv-debug.apk dist/Rust_Fighter_GoogleTV_v0.2.0.apk
-cp android-tv/remote/build/outputs/apk/debug/remote-debug.apk dist/Rust_Fighter_Remote_Android_v0.2.0.apk
+cp android-tv/tv/build/outputs/apk/debug/tv-debug.apk dist/Rust_Fighter_GoogleTV_v0.2.1.apk
+cp android-tv/remote/build/outputs/apk/debug/remote-debug.apk dist/Rust_Fighter_Remote_Android_v0.2.1.apk
 cd dist
 sha256sum Rust_Fighter_*.apk > SHA256SUMS.txt
 printf '%s\n' 'APK artifacts are debug-signed and have NOT been validated on actual devices.' > RELEASE_STATUS.txt

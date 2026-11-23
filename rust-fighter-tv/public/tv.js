@@ -12,16 +12,22 @@
   setup.classList.add('hidden');
   game.classList.remove('hidden');
   $('newRoom').textContent='PHÒNG MỚI';
+  function refreshLanAddress(){
+    let ip='';
+    try { ip=window.TvHost?.ipAddress?.()||''; } catch (_) {}
+    const available=ip && ip!=='0.0.0.0';
+    $('tvIpBadge').textContent=available?`TV IP: ${ip}:3000`:'TV CHƯA CÓ IP MẠNG';
+    $('phoneUrl').textContent=available?`Trên Remote, nhập IP ${ip} và mã 6 số phía trên`:'TV cần kết nối Wi-Fi/LAN để ghép tay cầm';
+  }
+  refreshLanAddress();
+  setInterval(refreshLanAddress,5000);
   function openRoom(){
     if(socket && socket.readyState !== WebSocket.CLOSED) return;
     try {socket=new WebSocket(wsUrl('/ws?role=tv'));}
     catch(error){$('roomModeLabel').textContent='LỖI MÁY CHỦ: '+error.message;setTimeout(openRoom,2000);return;}
     $('roomModeLabel').textContent='CHỜ TAY CẦM 1 CHỌN CHẾ ĐỘ';
     socket.onopen=()=>{
-      const hostIp=(window.TvHost && typeof window.TvHost.ipAddress==='function') ? window.TvHost.ipAddress() : ''; 
-      $('phoneUrl').textContent=hostIp && hostIp!=='0.0.0.0'
-        ? `Cài APK Remote, cùng Wi-Fi. TV: ${hostIp}:3000`
-        : 'Cài APK Rust Fighter Remote, chọn TV cùng mạng Wi-Fi';
+      refreshLanAddress();
     };
     socket.onmessage=event=>{
       let data;try{data=JSON.parse(event.data);}catch{return;}

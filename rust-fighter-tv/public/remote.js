@@ -13,6 +13,9 @@
   const codeField=$('roomCode');
   codeField.addEventListener('input',()=>{codeField.value=codeField.value.replace(/\D/g,'').slice(0,6);});
   const queryCode=new URLSearchParams(location.search).get('code');if(queryCode&&/^\d{6}$/.test(queryCode))codeField.value=queryCode;
+  if(new URLSearchParams(location.search).get('auto')==='1' && /^\d{6}$/.test(codeField.value)) {
+    setTimeout(()=>$('connectForm').requestSubmit(),250);
+  }
   $('connectForm').addEventListener('submit',event=>{
     event.preventDefault();setError('');
     const code=codeField.value.trim();

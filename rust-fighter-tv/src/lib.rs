@@ -380,7 +380,10 @@ async fn handle_socket(socket: WebSocket, state: Shared, query: WsQuery) {
     };
     let Some((room_id, slot)) = joined else {
         let _ = tx.send(Message::Text(json!({"type":"error","message":"Mã không tồn tại hoặc tay cầm đã được kết nối."}).to_string()));
-        sender.abort();
+        // Send the invalid-code error before tearing down the WebSocket sender.
+        drop(client);
+        drop(tx);
+        let _ = tokio::time::timeout(Duration::from_millis(500), sender).await;
         return;
     };
     if slot.is_none() {
